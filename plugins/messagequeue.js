@@ -12,6 +12,9 @@ module.exports = fp(async function (fastify, opts) {
       const container = rhea.create_container()
       var amqp_message = container.message;
 
+      //Add log of message here
+      console.log(`AMQP message to be sent: ${body}`);
+
       const connectOptions = {
         hostname: process.env.ORDER_QUEUE_HOSTNAME,
         host: process.env.ORDER_QUEUE_HOSTNAME,
@@ -24,6 +27,9 @@ module.exports = fp(async function (fastify, opts) {
       if (process.env.ORDER_QUEUE_TRANSPORT !== undefined) {
         connectOptions.transport = process.env.ORDER_QUEUE_TRANSPORT
       }
+
+      // Log of connection options here
+      console.log(`connectionOptions: ${JSON.stringify(connectOptions)}`)
       
       const connection = container.connect(connectOptions)
       
